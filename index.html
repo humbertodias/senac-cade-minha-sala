@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <!--
+    WARNING! Make sure that you match all Quasar related
+    tags to the same version! (Below it's "@2.9.1")
+  -->
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
+    <link href="https://unpkg.com/quasar/dist/quasar.prod.css" rel="stylesheet" type="text/css">
+</head>
+
+  
+<body>
+
+<div id="app">
+
+    {{ curso }}
+    <q-select v-model="curso" :options="cursos" option-value="id" option-label="nome" label="Curso" @update:model-value=loadHorario />
+
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/sql.js/dist/sql-wasm.js"></script>
+<script src="https://unpkg.com/quasar/dist/quasar.umd.prod.js"></script>
+
+<script>
+  const app = Vue.createApp({
+    setup () {
+        return {}
+    },
+    data() {
+      return {
+        db: undefined,
+        cursos: [],
+        salas: [],
+        horarios: [],
+        curso: undefined
+      }
+    },
+    mounted() {
+        this.loadDb('https://github.com/humbertodias/senac-cade-minha-sala/blob/main/salas.db?raw=true')
+    },
+    methods: {
+        loadDb(dbUrl){
+            let self = this;
+
+            // https://sql.js.org/dist/sql-wasm.wasm
+            // Load sql.js WebAssembly file
+            let config = {
+                locateFile: () => "https://sql.js.org/dist/sql-wasm.wasm",
+            };
+            initSqlJs(config).then(function (SQL) {
+                console.log("sql.js initialized ");
+
+                fetch(dbUrl)
+                .then(response => response.arrayBuffer())
+                .then(buf => {
+                    self.db = new SQL.Database(new Uint8Array(buf));
+                    console.log("db loaded ");
+                    self.loadCursos()
+                });
+
+            });
+
+        },
+        loadCursos(){
+            // Prepare an sql statement
+            const stmt = this.db.prepare("SELECT * FROM curso");
+            while(stmt.step()) {
+                const row = stmt.getAsObject();
+                this.cursos.push(row);
+            }
+        },
+        loadSalas(id){
+            // Prepare an sql statement
+            const stmt = this.db.prepare("SELECT * FROM sala");
+            while(stmt.step()) {
+                const row = stmt.getAsObject();
+                this.salas.push(row);
+            }
+        },
+        loadHorario(curso){
+            console.log(curso)
+            // TODO
+            /*
+            // Prepare an sql statement
+            const stmt = this.db.prepare("SELECT * FROM horario WHERE Curso=:nomeCurso");
+            stmt.bind([0, curso.nome]);
+            while(stmt.step()) {
+                const row = stmt.getAsObject();
+                this.horarios.push(row);
+            }
+            */
+        },
+    }
+    })
+
+    app.use(Quasar)
+    app.mount('#app')
+</script>
+
+<script>
+</script>
+
+</body>
+</html>
+
+<!-- 
+    https://sql.js.org
+    https://quasar.dev/vue-component 
+-->
