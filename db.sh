@@ -3,6 +3,7 @@
 # Deps
 # apt install curl jq sqlite3
 # pip install sqlite-utils
+# npm install -g http-server --no-package-lock
 
 DB=${1-salas}.db
 
@@ -17,6 +18,11 @@ for CURSO_ID in $(cat curso.json | jq -r .[].id | sort -n); do
 done
 rm curso.json
 
+# Foreign key
+sqlite-utils add-foreign-key $DB horario idCurso curso id
+sqlite-utils add-foreign-key $DB mensagem idCurso curso id
+
+# Create table Sala
 curl -s http://sistemasparainternet.azurewebsites.net/horarios/2.0/getSalas.php | jq .salas | sqlite-utils insert $DB sala - --pk=id --replace
 
 echo "Waiting for processes to finish" 
