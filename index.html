@@ -76,6 +76,7 @@
 
         },
         loadCursos(){
+            this.cursos = [];
             // Prepare an sql statement
             const stmt = this.db.prepare("SELECT * FROM curso");
             while(stmt.step()) {
@@ -96,6 +97,7 @@
             */
         },
         loadTurmas(curso){
+            this.turmas = []
             // Prepare an sql statement
             const stmt = this.db.prepare("SELECT DISTINCT idCurso, Turma, Semestre FROM horario WHERE idCurso=:idCurso");
             stmt.bind({':idCurso': curso.id});
@@ -105,6 +107,7 @@
             }
         },
         loadHorarios(turma){
+            this.horarios = []
             // Prepare an sql statement
             const stmt = this.db.prepare("SELECT * FROM horario WHERE Turma=:idTurma");
             stmt.bind({':idTurma': turma.id});
