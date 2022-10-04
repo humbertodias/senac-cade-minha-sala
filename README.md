@@ -1,8 +1,8 @@
 # SENAC - Cadê Minha Sala
 
-* [Vue](https://vuejs.org) for react DOM
-* [sql.js](https://sql.js.org) sqlite js
-* [Quasar](https://quasar.dev/vue-component) visual componenents
+* [vue](https://vuejs.org) for react DOM
+* [sql.js](https://sql.js.org) sqlite bridge for javascript
+* [quasar](https://quasar.dev/vue-component) visual components
 * [sqlite-utils](https://sqlite-utils.datasette.io/en/stable/cli.html) for parsing json into sqlite
 
 
@@ -19,3 +19,10 @@ http-server
 Then
 
 http://localhost:8080
+
+
+# DB Update
+
+```sh
+./db.sh
+```
