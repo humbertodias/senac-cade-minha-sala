@@ -2,7 +2,7 @@
 
 * [vue](https://vuejs.org) for react DOM
 * [sql.js](https://sql.js.org) sqlite bridge for javascript
-* [quasar](https://quasar.dev/vue-component) visual components
+* [quasar](https://quasar.dev/vue-components) visual components
 * [sqlite-utils](https://sqlite-utils.datasette.io/en/stable/cli.html) for parsing json into sqlite
 
 

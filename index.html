@@ -16,7 +16,16 @@
 <div id="app">
 
     {{ curso }}
-    <q-select v-model="curso" :options="cursos" option-value="id" option-label="nome" label="Curso" @update:model-value=loadHorario />
+    <q-select outlined v-model="curso" :options="cursos" option-value="id" option-label="nome" label="Curso" @update:model-value=loadTurmas >
+    </q-select>
+
+    {{ turma }}
+    <q-select outlined v-model="turma" :options="turmas" option-value="id" option-label="nome" label="Turma" @update:model-value=loadHorarios >
+    </q-select>
+
+    {{ horario }}
+    <q-select outlined v-model="horario" :options="horarios" option-value="id" option-label="nome" label="Horario" @update:model-value=loadSalas >
+    </q-select>
 
 </div>
 
@@ -33,9 +42,11 @@
       return {
         db: undefined,
         cursos: [],
+        turmas: [],
         salas: [],
         horarios: [],
-        curso: undefined
+        curso: undefined,
+        turma: undefined,
       }
     },
     mounted() {
@@ -72,26 +83,35 @@
                 this.cursos.push(row);
             }
         },
-        loadSalas(id){
-            // Prepare an sql statement
+        loadSalas(horario){
+            console.log(horario)
+            // TODO
+            /*
+            // Prepare an sql statement
             const stmt = this.db.prepare("SELECT * FROM sala");
             while(stmt.step()) {
                 const row = stmt.getAsObject();
                 this.salas.push(row);
             }
+            */
         },
-        loadHorario(curso){
-            console.log(curso)
-            // TODO
-            /*
+        loadTurmas(curso){
             // Prepare an sql statement
-            const stmt = this.db.prepare("SELECT * FROM horario WHERE Curso=:nomeCurso");
-            stmt.bind([0, curso.nome]);
+            const stmt = this.db.prepare("SELECT DISTINCT idCurso, Turma, Semestre FROM horario WHERE idCurso=:idCurso");
+            stmt.bind({':idCurso': curso.id});
             while(stmt.step()) {
                 const row = stmt.getAsObject();
-                this.horarios.push(row);
+                this.turmas.push({'id': row.Turma, 'nome' : curso.nome + "-" + row.Semestre });
             }
-            */
+        },
+        loadHorarios(turma){
+            // Prepare an sql statement
+            const stmt = this.db.prepare("SELECT * FROM horario WHERE Turma=:idTurma");
+            stmt.bind({':idTurma': turma.id});
+            while(stmt.step()) {
+                const row = stmt.getAsObject();
+                this.horarios.push({'id': row.id, 'nome' : row.Disciplina + "-" + row.Professor + "-" + row.faixaHoraria });
+            }
         },
     }
     })
