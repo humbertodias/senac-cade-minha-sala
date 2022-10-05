@@ -74,7 +74,8 @@
                             {{horario.horarios}}
                             <br>
                             Sala: 
-                            {{horario.sala}}
+                            <span v-if="horario.salaInfo.id">{{horario.salaInfo.nome}} - {{horario.salaInfo.tipo}} - {{horario.salaInfo.localizacao}} - {{horario.salaInfo.descricao}}</span>
+                            <spa v-else>Atribuição pendente</spa>
                             </div>
                         </q-card-section>
 
@@ -104,8 +105,8 @@
         unidades: [],
         cursos: [],
         turmas: [],
-        salas: [],
         horarios: [],
+        salas: [],
 
         unidade: undefined,
         curso: undefined,
@@ -154,8 +155,6 @@
             this.turma = undefined;
             this.horarios = [];
 
-
-            // Prepare an sql statement
             const stmt = this.db.prepare("SELECT * FROM curso where idUnidade=:idUnidade");
             stmt.bind({':idUnidade': unidade.id});
             while(stmt.step()) {
@@ -164,7 +163,6 @@
             }
         },
         loadProfessor(nomeProfessor){
-            // Prepare an sql statement
             const stmt = this.db.prepare("SELECT * FROM professor WHERE photo is not null AND name LIKE :nomeProfessor");
             stmt.bind({':nomeProfessor': nomeProfessor});
             return stmt.step() 
@@ -175,7 +173,7 @@
             this.turmas = []
             this.horarios = []
             this.turma = undefined
-            // Prepare an sql statement
+
             const stmt = this.db.prepare("SELECT DISTINCT idCurso, Turma, Semestre FROM horario WHERE idCurso=:idCurso");
             stmt.bind({':idCurso': curso.id});
             while(stmt.step()) {
@@ -185,14 +183,22 @@
         },
         loadHorarios(turma){
             this.horarios = []
-            // Prepare an sql statement
+
             const stmt = this.db.prepare("SELECT GROUP_CONCAT(faixaHoraria) as horarios, DiaSemana, Disciplina, Professor, sala, Turma, Semestre, Curso FROM horario WHERE Turma=:idTurma GROUP BY DiaSemana, Disciplina, Professor, sala, Turma, Semestre, Curso");
             stmt.bind({':idTurma': turma.id});
             while(stmt.step()) {
                 let row = stmt.getAsObject();
                 row.professorInfo = this.loadProfessor(row.Professor)
+                row.salaInfo = this.loadSala(row.sala)
                 this.horarios.push(row);
             }
+        },
+        loadSala(idSala){
+            const stmt = this.db.prepare("SELECT * FROM sala WHERE id=:idSala");
+            stmt.bind({':idSala': idSala});
+            return stmt.step() 
+            ?  stmt.getAsObject()
+            : { nome : "_Atribuição pendente" , tipo : null, localizacao: null, descricao: null};
         },
         diaDaSemana(diaIndice) {
             return [
