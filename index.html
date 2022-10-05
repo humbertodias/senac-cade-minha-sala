@@ -18,10 +18,10 @@
               </q-avatar>
     
               <q-toolbar-title>
-                Horários
+                SENAC
               </q-toolbar-title>
     
-              <q-btn flat round dense icon="whatshot" />
+              <a target="_blank" href="https://www.sp.senac.br/unidades" style="text-decoration: none; "><q-btn flat round dense icon="whatshot" /></a>
             </q-toolbar>
           </q-header>
     
@@ -38,12 +38,16 @@
             
                 <q-select outlined v-model="turma" :options="turmas" option-value="id" option-label="nome" label="Turma" @update:model-value=loadHorarios >
                 </q-select>
-            
+
+                <br>
+
+                <q-chip icon="event" v-if="horarios.length">Horário</q-chip>
+
                 <div v-for="(horario, index) in horarios">
 
                 <br>
 
-                <q-card bordered >
+                <q-card bordered>
             
                     <q-item>
                         <q-item-section avatar>
@@ -162,7 +166,7 @@
             stmt.bind({':nomeProfessor': nomeProfessor});
             return stmt.step() 
             ?  stmt.getAsObject()
-            : { name : "_Atribuição pendente" , lattes : "" , photo: "http://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=empty"};
+            : { name : "_Atribuição pendente" , lattes : "http://buscatextual.cnpq.br/buscatextual/" , photo: "http://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=empty"};
         },
         loadTurmas(curso){
             this.turmas = []
