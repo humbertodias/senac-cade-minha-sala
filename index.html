@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>SENAC - Cadê minha sala</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
     <link href="https://unpkg.com/quasar/dist/quasar.prod.css" rel="stylesheet" type="text/css">
-</head>
-
-  
+</head>  
 <body>
-
     <div id="app">
         
         <q-layout class="shadow-2 rounded-borders">
 
           <q-header>
             <q-toolbar>
+
               <q-avatar>
                 <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
               </q-avatar>
@@ -46,13 +43,13 @@
                     <q-item>
                         <q-item-section avatar>
                           <q-avatar>
-                            <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+                            <img :src="horario.professorInfo.photo">
                           </q-avatar>
                         </q-item-section>
                 
                         <q-item-section>
                           <q-item-label>{{horario.Disciplina}}</q-item-label>
-                          <q-item-label caption>{{horario.Professor}}</q-item-label>
+                          <q-item-label caption><a target="_blank" :href="horario.professorInfo.lattes">{{horario.Professor}}</a></q-item-label>
                         </q-item-section>
                       </q-item>
                 
@@ -61,7 +58,7 @@
                         <div class="text-overline">{{ diaDaSemana(horario.DiaSemana) }}</div>
                         <div class="text-caption text-grey">
                         Hoarário:
-                        {{horario.faixaHoraria}}
+                        {{horario.horarios}}
                         <br>
                         Sala: 
                         {{horario.sala}}
@@ -73,12 +70,9 @@
 
                   </div>
             
-
             </q-page>
           </q-page-container>
         </q-layout>
-    
- 
 
 </div>
 
@@ -117,7 +111,6 @@
                 console.log("sql.js initialized ");
                 fnOk(SQL)
             });
-
         },
         loadDb(SQL, dbUrl, fnOk){
                 fetch(dbUrl)
@@ -137,20 +130,18 @@
                 this.cursos.push(row);
             }
         },
-        loadSalas(horario){
-            console.log(horario)
-            // TODO
-            /*
+        loadProfessor(nomeProfessor){
             // Prepare an sql statement
-            const stmt = this.db.prepare("SELECT * FROM sala");
-            while(stmt.step()) {
-                const row = stmt.getAsObject();
-                this.salas.push(row);
-            }
-            */
+            const stmt = this.db.prepare("SELECT * FROM professor WHERE name LIKE :nomeProfessor");
+            stmt.bind({':nomeProfessor': nomeProfessor});
+            return stmt.step() 
+            ?  stmt.getAsObject()
+            : { name : "_Atribuição pendente" , lattes : "" , photo: "http://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=empty"};
         },
         loadTurmas(curso){
             this.turmas = []
+            this.horarios = []
+            this.turma = undefined
             // Prepare an sql statement
             const stmt = this.db.prepare("SELECT DISTINCT idCurso, Turma, Semestre FROM horario WHERE idCurso=:idCurso");
             stmt.bind({':idCurso': curso.id});
@@ -162,22 +153,23 @@
         loadHorarios(turma){
             this.horarios = []
             // Prepare an sql statement
-            const stmt = this.db.prepare("SELECT DISTINCT DiaSemana, Disciplina, Professor, sala, Turma, Semestre, Curso FROM horario WHERE Turma=:idTurma");
+            const stmt = this.db.prepare("SELECT GROUP_CONCAT(faixaHoraria) as horarios, DiaSemana, Disciplina, Professor, sala, Turma, Semestre, Curso FROM horario WHERE Turma=:idTurma GROUP BY DiaSemana, Disciplina, Professor, sala, Turma, Semestre, Curso");
             stmt.bind({':idTurma': turma.id});
             while(stmt.step()) {
-                const row = stmt.getAsObject();
+                let row = stmt.getAsObject();
+                row.professorInfo = this.loadProfessor(row.Professor)
                 this.horarios.push(row);
             }
         },
         diaDaSemana(diaIndice) {
             return [
-                    'segunda',
-                    'terça',
-                    'quarta',
-                    'quinta',
-                    'sexta',
-                    'sábado',
-                    'domingo',
+                    'Segunda',
+                    'Terça',
+                    'Quarta',
+                    'Quinta',
+                    'Sexta',
+                    'Sábado',
+                    'Domingo',
                 ][diaIndice-1]
         }
 
