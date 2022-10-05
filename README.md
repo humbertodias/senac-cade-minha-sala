@@ -10,19 +10,5 @@
 
 https://humbertodias.github.io/senac-cade-minha-sala/
 
+![senac-horarios](https://user-images.githubusercontent.com/9255997/194087537-4f97577f-1551-41ef-9a0c-34dfcaadb34f.png)
 
-# Locally
-
-```sh
-http-server
-```
-Then
-
-http://localhost:8080
-
-
-# DB Update
-
-```sh
-./db.sh
-```
