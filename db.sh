@@ -7,8 +7,13 @@
 
 DB=${1-salas}.db
 
-curl -s http://sistemasparainternet.azurewebsites.net/horarios/2.0/getCursos.php | jq .cursos > curso.json 
+# unidade
+sqlite-utils insert $DB unidade unidade.json --replace
+
+# Appending Unidade > {"id": 3, "nome": "Centro Universitário Senac - Santo Amaro"}
+curl -s http://sistemasparainternet.azurewebsites.net/horarios/2.0/getCursos.php | jq .cursos | jq --arg val 3 '.[] += {idUnidade: $val}' > curso.json 
 sqlite-utils insert $DB curso curso.json --pk=id --replace
+
 
 CURSO_COUNT=$(cat curso.json | wc -l)
 for CURSO_ID in $(cat curso.json | jq -r .[].id | sort -n); do
