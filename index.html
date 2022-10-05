@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <!--
-    WARNING! Make sure that you match all Quasar related
-    tags to the same version! (Below it's "@2.9.1")
-  -->
 
 <head>
+    <title>SENAC - Cadê minha sala</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
     <link href="https://unpkg.com/quasar/dist/quasar.prod.css" rel="stylesheet" type="text/css">
 </head>
@@ -13,19 +10,75 @@
   
 <body>
 
-<div id="app">
+    <div id="app">
+        
+        <q-layout class="shadow-2 rounded-borders">
 
-    {{ curso }}
-    <q-select outlined v-model="curso" :options="cursos" option-value="id" option-label="nome" label="Curso" @update:model-value=loadTurmas >
-    </q-select>
+          <q-header>
+            <q-toolbar>
+              <q-avatar>
+                <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+              </q-avatar>
+    
+              <q-toolbar-title>
+                Horários
+              </q-toolbar-title>
+    
+              <q-btn flat round dense icon="whatshot" />
+            </q-toolbar>
+          </q-header>
+    
+          <q-page-container>
+            <q-page padding>
 
-    {{ turma }}
-    <q-select outlined v-model="turma" :options="turmas" option-value="id" option-label="nome" label="Turma" @update:model-value=loadHorarios >
-    </q-select>
+                <q-select outlined v-model="curso" :options="cursos" option-value="id" option-label="nome" label="Curso" @update:model-value=loadTurmas >
+                </q-select>
+            
+                <q-select outlined v-model="turma" :options="turmas" option-value="id" option-label="nome" label="Turma" @update:model-value=loadHorarios >
+                </q-select>
+            
+                <div v-for="(horario, index) in horarios">
 
-    {{ horario }}
-    <q-select outlined v-model="horario" :options="horarios" option-value="id" option-label="nome" label="Horario" @update:model-value=loadSalas >
-    </q-select>
+                <br>
+
+                <q-card bordered >
+            
+                    <q-item>
+                        <q-item-section avatar>
+                          <q-avatar>
+                            <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+                          </q-avatar>
+                        </q-item-section>
+                
+                        <q-item-section>
+                          <q-item-label>{{horario.Disciplina}}</q-item-label>
+                          <q-item-label caption>{{horario.Professor}}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                
+                    <q-card-section horizontal>
+                      <q-card-section class="q-pt-xs">
+                        <div class="text-overline">{{ diaDaSemana(horario.DiaSemana) }}</div>
+                        <div class="text-caption text-grey">
+                        Hoarário:
+                        {{horario.faixaHoraria}}
+                        <br>
+                        Sala: 
+                        {{horario.sala}}
+                        </div>
+                      </q-card-section>
+              
+                  </q-card>
+
+
+                  </div>
+            
+
+            </q-page>
+          </q-page-container>
+        </q-layout>
+    
+ 
 
 </div>
 
@@ -50,31 +103,31 @@
       }
     },
     mounted() {
-        this.loadDb('salas.db')
+        this.loadSql((SQL) => this.loadDb(SQL, 'salas.db', this.loadCursos));
     },
     methods: {
-        loadDb(dbUrl){
-            let self = this;
 
+        loadSql(fnOk){
             // https://sql.js.org/dist/sql-wasm.wasm
             // Load sql.js WebAssembly file
             let config = {
                 locateFile: () => "https://sql.js.org/dist/sql-wasm.wasm",
             };
-            initSqlJs(config).then(function (SQL) {
+            initSqlJs(config).then((SQL)=> {
                 console.log("sql.js initialized ");
-
-                fetch(dbUrl)
-                .then(response => response.arrayBuffer())
-                .then(buf => {
-                    self.db = new SQL.Database(new Uint8Array(buf));
-                    console.log("db loaded ");
-                    self.loadCursos()
-                });
-
+                fnOk(SQL)
             });
 
         },
+        loadDb(SQL, dbUrl, fnOk){
+                fetch(dbUrl)
+                .then(response => response.arrayBuffer())
+                .then(buf => {
+                    this.db = new SQL.Database(new Uint8Array(buf));
+                    console.log("db loaded");
+                    fnOk()
+                });
+        },
         loadCursos(){
             this.cursos = [];
             // Prepare an sql statement
@@ -103,20 +156,32 @@
             stmt.bind({':idCurso': curso.id});
             while(stmt.step()) {
                 const row = stmt.getAsObject();
-                this.turmas.push({'id': row.Turma, 'nome' : curso.nome + "-" + row.Semestre });
+                this.turmas.push({'id': row.Turma, 'nome' : `${row.Semestre} (${row.Turma})` });
             }
         },
         loadHorarios(turma){
             this.horarios = []
             // Prepare an sql statement
-            const stmt = this.db.prepare("SELECT * FROM horario WHERE Turma=:idTurma");
+            const stmt = this.db.prepare("SELECT DISTINCT DiaSemana, Disciplina, Professor, sala, Turma, Semestre, Curso FROM horario WHERE Turma=:idTurma");
             stmt.bind({':idTurma': turma.id});
             while(stmt.step()) {
                 const row = stmt.getAsObject();
-                this.horarios.push({'id': row.id, 'nome' : row.Disciplina + "-" + row.Professor + "-" + row.faixaHoraria });
+                this.horarios.push(row);
             }
         },
-    }
+        diaDaSemana(diaIndice) {
+            return [
+                    'segunda',
+                    'terça',
+                    'quarta',
+                    'quinta',
+                    'sexta',
+                    'sábado',
+                    'domingo',
+                ][diaIndice-1]
+        }
+
+    },
     })
 
     app.use(Quasar)
