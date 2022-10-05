@@ -4,9 +4,9 @@ Aplicativo para os alunos do Centro Universitário Senac - Campi Santo Amaro. Ag
 
 # Play
 
-https://humbertodias.github.io/senac-cade-minha-sala/
-
 ![senac-horarios](https://user-images.githubusercontent.com/9255997/194087537-4f97577f-1551-41ef-9a0c-34dfcaadb34f.png)
+
+https://humbertodias.github.io/senac-cade-minha-sala/
 
 # Ref
 * [vue](https://vuejs.org) for react DOM
