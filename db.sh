@@ -22,8 +22,11 @@ rm curso.json
 sqlite-utils add-foreign-key $DB horario idCurso curso id
 sqlite-utils add-foreign-key $DB mensagem idCurso curso id
 
-# Create table Sala
+# sala
 curl -s http://sistemasparainternet.azurewebsites.net/horarios/2.0/getSalas.php | jq .salas | sqlite-utils insert $DB sala - --pk=id --replace
+
+# professor
+sqlite-utils insert $DB professor professor.json --replace
 
 echo "Waiting for processes to finish" 
 wait $(jobs -p)
