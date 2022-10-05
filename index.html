@@ -45,39 +45,42 @@
 
                 <div v-for="(horario, index) in horarios">
 
-                <br>
+                    <br>
 
-                <q-card bordered>
-            
-                    <q-item>
-                        <q-item-section avatar>
-                          <q-avatar>
-                            <img :src="horario.professorInfo.photo">
-                          </q-avatar>
-                        </q-item-section>
+                    <q-card bordered>
                 
-                        <q-item-section>
-                          <q-item-label>{{horario.Disciplina}}</q-item-label>
-                          <q-item-label caption><a target="_blank" :href="horario.professorInfo.lattes">{{horario.Professor}}</a></q-item-label>
-                        </q-item-section>
-                      </q-item>
+                        <q-card-section>
                 
-                    <q-card-section horizontal>
-                      <q-card-section class="q-pt-xs">
-                        <div class="text-overline">{{ diaDaSemana(horario.DiaSemana) }}</div>
-                        <div class="text-caption text-grey">
-                        Hoarário:
-                        {{horario.horarios}}
-                        <br>
-                        Sala: 
-                        {{horario.sala}}
-                        </div>
-                      </q-card-section>
-              
-                  </q-card>
+                            <q-item>
+                            <q-item-section avatar>
+                            <q-avatar>
+                                <img :src="horario.professorInfo.photo">
+                            </q-avatar>
+                            </q-item-section>
+                    
+                            <q-item-section>
+                            <q-item-label>{{horario.Disciplina}}</q-item-label>
+                            <q-item-label caption><a target="_blank" :href="horario.professorInfo.lattes">{{horario.Professor}}</a></q-item-label>
+                            </q-item-section>
+                        </q-item>
+
+                        </q-card-section>
 
 
-                  </div>
+                        <q-card-section class="q-pt-xs">
+                            <div class="text-overline">{{ diaDaSemana(horario.DiaSemana) }}</div>
+                            <div class="text-caption text-grey">
+                            Hoarário:
+                            {{horario.horarios}}
+                            <br>
+                            Sala: 
+                            {{horario.sala}}
+                            </div>
+                        </q-card-section>
+
+                    </q-card>
+
+                </div>
             
             </q-page>
           </q-page-container>
