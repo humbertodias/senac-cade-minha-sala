@@ -165,7 +165,7 @@
         },
         loadProfessor(nomeProfessor){
             // Prepare an sql statement
-            const stmt = this.db.prepare("SELECT * FROM professor WHERE name LIKE :nomeProfessor");
+            const stmt = this.db.prepare("SELECT * FROM professor WHERE photo is not null AND name LIKE :nomeProfessor");
             stmt.bind({':nomeProfessor': nomeProfessor});
             return stmt.step() 
             ?  stmt.getAsObject()
