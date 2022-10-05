@@ -1,0 +1,62 @@
+[
+     {"id": 1, "nome": "Centro Universitário Senac - Águas de São Pedro"}
+    ,{"id": 2, "nome": "Centro Universitário Senac - Campos do Jordão"}
+    ,{"id": 3, "nome": "Centro Universitário Senac - Santo Amaro"}
+    ,{"id": 4, "nome": "Senac - Aclimação"}
+    ,{"id": 5, "nome": "Senac - Americana"}
+    ,{"id": 6, "nome": "Senac - Araçatuba"}
+    ,{"id": 7, "nome": "Senac - Araraquara"}
+    ,{"id": 8, "nome": "Senac - Barretos"}
+    ,{"id": 9, "nome": "Senac - Baurú"}
+    ,{"id": 10, "nome": "Senac - Bebedouro"}
+    ,{"id": 11, "nome": "Senac - Bertioga"}
+    ,{"id": 12, "nome": "Senac - Botucatú"}
+    ,{"id": 13, "nome": "Senac - Campinas"}
+    ,{"id": 14, "nome": "Senac - Catanduva"}
+    ,{"id": 15, "nome": "Senac - Franca"}
+    ,{"id": 16, "nome": "Senac - Francisco Matarazzo"}
+    ,{"id": 17, "nome": "Senac - Guaratinguetá"}
+    ,{"id": 18, "nome": "Senac - Guarulhos Celestino"}
+    ,{"id": 19, "nome": "Senac - Guarulhos - Faccini"}
+    ,{"id": 20, "nome": "Senac - Itapetininga"}
+    ,{"id": 21, "nome": "Senac - Itapira"}
+    ,{"id": 22, "nome": "Senac - Itaquera"}
+    ,{"id": 23, "nome": "Senac - Itú"}
+    ,{"id": 24, "nome": "Senac - Jabaquara"}
+    ,{"id": 25, "nome": "Senac - Jaboticabal"}
+    ,{"id": 26, "nome": "Senac - Jardim Primavera"}
+    ,{"id": 27, "nome": "Senac - Jaú"}
+    ,{"id": 28, "nome": "Senac - Jundiaí"}
+    ,{"id": 29, "nome": "Senac - Lapa Faustolo"}
+    ,{"id": 30, "nome": "Senac - Lapa Scipiao"}
+    ,{"id": 31, "nome": "Senac - Lapa Tito"}
+    ,{"id": 32, "nome": "Senac - Largo Treze"}
+    ,{"id": 33, "nome": "Senac - Limeira"}
+    ,{"id": 34, "nome": "Senac - Marília"}
+    ,{"id": 35, "nome": "Senac - Mogi Guaçú"}
+    ,{"id": 36, "nome": "Senac - Naçoes Unidas"}
+    ,{"id": 37, "nome": "Senac - Osasco"}
+    ,{"id": 38, "nome": "Senac - Ourinhos"}
+    ,{"id": 39, "nome": "Senac - Penha"}
+    ,{"id": 40, "nome": "Senac - Pindamonhangaba"}
+    ,{"id": 41, "nome": "Senac - Piracicaba"}
+    ,{"id": 42, "nome": "Senac - Presidente Prudente"}
+    ,{"id": 43, "nome": "Senac - Registro"}
+    ,{"id": 44, "nome": "Senac - Ribeirao Preto"}
+    ,{"id": 45, "nome": "Senac - Rio Claro"}
+    ,{"id": 46, "nome": "Senac - Santos"}
+    ,{"id": 47, "nome": "Senac - Sao Bernardo do Campo"}
+    ,{"id": 48, "nome": "Senac - Sao Carlos"}
+    ,{"id": 49, "nome": "Senac - Sao Joao da Boa Vista"}
+    ,{"id": 50, "nome": "Senac - Sao Jose do Rio Preto"}
+    ,{"id": 51, "nome": "Senac - Sao Jose dos Campos"}
+    ,{"id": 52, "nome": "Senac - Sao Miguel Paulista"}
+    ,{"id": 53, "nome": "Senac - Sorocaba"}
+    ,{"id": 54, "nome": "Senac - Taboa da Serra"}
+    ,{"id": 55, "nome": "Senac - Tatuape Cel. Luis Americano"}
+    ,{"id": 56, "nome": "Senac - Tatuape Serra de Bragança"}
+    ,{"id": 57, "nome": "Senac - Taubaté"}
+    ,{"id": 58, "nome": "Senac - Tiradentes"}
+    ,{"id": 59, "nome": "Senac - Vila Prudente"}
+    ,{"id": 60, "nome": "Senac - Votuporanga"}
+    ]

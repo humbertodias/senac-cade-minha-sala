@@ -28,6 +28,11 @@
           <q-page-container>
             <q-page padding>
 
+                <q-select outlined v-model="unidade" :options="unidades" option-value="id" option-label="nome" label="Unidade" @update:model-value=loadCursos >
+                </q-select>
+
+                <br>
+
                 <q-select outlined v-model="curso" :options="cursos" option-value="id" option-label="nome" label="Curso" @update:model-value=loadTurmas >
                 </q-select>
             
@@ -88,19 +93,22 @@
     data() {
       return {
         db: undefined,
+
+        unidades: [],
         cursos: [],
         turmas: [],
         salas: [],
         horarios: [],
+
+        unidade: undefined,
         curso: undefined,
         turma: undefined,
       }
     },
     mounted() {
-        this.loadSql((SQL) => this.loadDb(SQL, 'salas.db', this.loadCursos));
+        this.loadSql((SQL) => this.loadDb(SQL, 'salas.db', this.loadUnidades));
     },
     methods: {
-
         loadSql(fnOk){
             // https://sql.js.org/dist/sql-wasm.wasm
             // Load sql.js WebAssembly file
@@ -121,10 +129,28 @@
                     fnOk()
                 });
         },
-        loadCursos(){
+        loadUnidades(){
+            
+            this.cursos = [];
+            this.curso = undefined;
+
+            const stmt = this.db.prepare("SELECT * FROM unidade");
+            while(stmt.step()) {
+                const row = stmt.getAsObject();
+                this.unidades.push(row);
+            }
+        },
+        loadCursos(unidade){
             this.cursos = [];
+            this.curso = undefined;
+            this.turmas = [];
+            this.turma = undefined;
+            this.horarios = [];
+
+
             // Prepare an sql statement
-            const stmt = this.db.prepare("SELECT * FROM curso");
+            const stmt = this.db.prepare("SELECT * FROM curso where idUnidade=:idUnidade");
+            stmt.bind({':idUnidade': unidade.id});
             while(stmt.step()) {
                 const row = stmt.getAsObject();
                 this.cursos.push(row);
