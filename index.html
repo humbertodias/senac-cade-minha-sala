@@ -8,6 +8,7 @@
 <body>
     <div id="app">
         
+      <q-responsive :ratio="16/9">
         <q-layout class="shadow-2 rounded-borders">
 
           <q-header>
@@ -18,10 +19,10 @@
               </q-avatar>
     
               <q-toolbar-title>
-                SENAC
+                <a target="_blank" href="https://www.sp.senac.br/unidades" style="text-decoration: none; ">SENAC</a>
               </q-toolbar-title>
     
-              <a target="_blank" href="https://www.sp.senac.br/unidades" style="text-decoration: none; "><q-btn flat round dense icon="whatshot" /></a>
+              <a target="_blank" href="https://github.com/humbertodias/senac-cade-minha-sala" style="text-decoration: none; "><q-btn flat round dense icon="whatshot" /></a>
             </q-toolbar>
           </q-header>
     
@@ -29,15 +30,36 @@
             <q-page padding>
 
                 <q-select outlined v-model="unidade" :options="unidades" option-value="id" option-label="nome" label="Unidade" @update:model-value=loadCursos >
+                  <template v-slot:no-option>
+                    <q-item>
+                      <q-item-section class="text-grey">
+                        No results
+                      </q-item-section>
+                    </q-item>
+                  </template>
                 </q-select>
 
                 <br>
 
                 <q-select outlined v-model="curso" :options="cursos" option-value="id" option-label="nome" label="Curso" @update:model-value=loadTurmas >
+                  <template v-slot:no-option>
+                    <q-item>
+                      <q-item-section class="text-grey">
+                        No results
+                      </q-item-section>
+                    </q-item>
+                  </template>
                 </q-select>
             
                 <q-select outlined v-model="turma" :options="turmas" option-value="id" option-label="nome" label="Turma" @update:model-value=loadHorarios >
-                </q-select>
+                  <template v-slot:no-option>
+                    <q-item>
+                      <q-item-section class="text-grey">
+                        No results
+                      </q-item-section>
+                    </q-item>
+                  </template>
+              </q-select>
 
                 <br>
 
@@ -50,17 +72,16 @@
                     <q-card bordered>
                 
                         <q-card-section>
-                
-                            <q-item>
+                        <q-item>
                             <q-item-section avatar>
-                            <q-avatar>
-                                <img :src="horario.professorInfo.photo">
-                            </q-avatar>
+                              <q-avatar>
+                                  <img :src="horario.professorInfo.photo">
+                              </q-avatar>
                             </q-item-section>
                     
                             <q-item-section>
-                            <q-item-label>{{horario.Disciplina}}</q-item-label>
-                            <q-item-label caption><a target="_blank" :href="horario.professorInfo.lattes">{{horario.Professor}}</a></q-item-label>
+                              <q-item-label>{{horario.Disciplina}}</q-item-label>
+                              <q-item-label caption><a target="_blank" :href="horario.professorInfo.lattes">{{horario.Professor}}</a></q-item-label>
                             </q-item-section>
                         </q-item>
 
@@ -86,6 +107,8 @@
             </q-page>
           </q-page-container>
         </q-layout>
+
+        </q-responsive>
 
 </div>
 
