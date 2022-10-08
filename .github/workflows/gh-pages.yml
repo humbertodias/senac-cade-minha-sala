@@ -19,6 +19,11 @@ jobs:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
+      - name: Set version
+        run: |
+          sed -i 's/#GIT_BRANCH#/${{github.base_ref}}/g' index.html
+          sed -i 's/#GIT_HASH#/${{github.sha}}}/g' index.html
+          
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         # If you're changing the branch from main,
