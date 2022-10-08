@@ -21,8 +21,9 @@ jobs:
 
       - name: Set version
         run: |
-          sed -i 's/#GIT_BRANCH#/${{github.base_ref}}/g' index.html
-          sed -i 's/#GIT_HASH#/${{github.sha}}}/g' index.html
+          sed -i 's/#GIT_BRANCH#/${{github.ref}}/g' index.html
+          sed -i 's/#GIT_HASH#/${{github.sha}}/g' index.html
+          cat index.index
           
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
