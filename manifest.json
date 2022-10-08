@@ -9,11 +9,6 @@
     "start_url": "index.html",
     "icons": [
         {
-            "src": "./images/icon-256.png",
-            "type": "image/png",
-            "sizes": "256x256"
-        },
-        {
             "src": "./images/icon-512.png",
             "type": "image/png",
             "sizes": "512x512"

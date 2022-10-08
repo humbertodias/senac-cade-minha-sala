@@ -15,15 +15,13 @@
           <q-header elevated class="bg-primary text-white">
             <q-toolbar>
 
-              <q-avatar>
-                <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-              </q-avatar>
-    
               <q-toolbar-title>
-                <a target="_blank" href="https://www.sp.senac.br/unidades" style="text-decoration: none; ">SENAC</a>
+                SENAC
               </q-toolbar-title>
     
-              <a target="_blank" href="https://github.com/humbertodias/senac-cade-minha-sala" style="text-decoration: none; "><q-btn flat round dense icon="whatshot" /></a>
+              <q-btn color="primary" @click="alert = true" icon="info" >
+                <q-tooltip>About</q-tooltip>
+              </q-btn>
             </q-toolbar>
 
           </q-header>
@@ -84,7 +82,7 @@
                       <q-item>
                           <q-item-section avatar>
                             <q-avatar>
-                                <img :src="horario.professorInfo.photo">
+                                <q-img :src="horario.professorInfo.photo" spinner-color="white" />
                             </q-avatar>
                           </q-item-section>
                   
@@ -116,10 +114,29 @@
           </q-page>
         </q-page-container>
 
-          
         </q-layout>
         
 
+        <q-dialog v-model="alert">
+          <q-card>
+            <q-card-section>
+              <div class="text-h6">Abut</div>
+            </q-card-section>
+    
+            <q-card-section class="q-pt-none">
+              
+              <ul>
+                <li><a target="_blank" href="https://www.sp.senac.br/unidades">Senac Unidades</a></li>
+                <li><a target="_blank" href="https://github.com/humbertodias/senac-cade-minha-sala">https://github.com/humbertodias/senac-cade-minha-sala</a></li>
+              </ul>
+
+            </q-card-section>
+    
+            <q-card-actions align="right">
+              <q-btn flat label="OK" color="primary" v-close-popup />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
 
 </div>
 
@@ -145,6 +162,8 @@
         unidade: undefined,
         curso: undefined,
         turma: undefined,
+
+        alert: false,
       }
     },
     mounted() {
