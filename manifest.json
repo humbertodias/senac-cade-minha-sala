@@ -1,0 +1,17 @@
+{
+    "name": "Cade minha Sala",
+    "short_name": "Cade minha Sala",
+    "theme_color": "#2196f3",
+    "background_color": "#2196f3",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "scope": "./",
+    "start_url": "./",
+    "icons": [
+        {
+            "src": "./images/icon-256.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
