@@ -1,4 +1,4 @@
-CACHE_NAME = "cache_v1.0";
+CACHE_NAME = "cache_v1.1";
 URL_CACHE = [
   'index.html',
   '/',
