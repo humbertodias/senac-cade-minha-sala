@@ -21,6 +21,7 @@ jobs:
 
       - name: Set version
         run: |
+          sed -i "s/#GIT_BRANCH#/'${{github.current_branch}}'/g" index.html
           sed -i "s/#GIT_HASH#/${{github.sha}}/g" index.html
           cat index.html
           
