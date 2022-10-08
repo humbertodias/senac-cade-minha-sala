@@ -47,7 +47,7 @@ self.addEventListener("fetch", (event) => {
     caches.match(event.request)
       .then(res => {
         if (res) {
-          console.log("Alread cached", res);
+          console.log("Already cached", res);
           return res;
         }
         return fetch(event.request, { "cache": "no-store" })
