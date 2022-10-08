@@ -7,11 +7,10 @@
 </head>  
 <body>
     <div id="app">
-        
-      <q-responsive :ratio="16/9">
-        <q-layout class="shadow-2 rounded-borders">
 
-          <q-header>
+        <q-layout view="hHh lpR fFf">
+      
+          <q-header elevated class="bg-primary text-white">
             <q-toolbar>
 
               <q-avatar>
@@ -24,91 +23,101 @@
     
               <a target="_blank" href="https://github.com/humbertodias/senac-cade-minha-sala" style="text-decoration: none; "><q-btn flat round dense icon="whatshot" /></a>
             </q-toolbar>
+
           </q-header>
-    
+      
           <q-page-container>
+
             <q-page padding>
 
-                <q-select outlined v-model="unidade" :options="unidades" option-value="id" option-label="nome" label="Unidade" @update:model-value=loadCursos >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey">
-                        No results
-                      </q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-
-                <br>
-
-                <q-select outlined v-model="curso" :options="cursos" option-value="id" option-label="nome" label="Curso" @update:model-value=loadTurmas >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey">
-                        No results
-                      </q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-            
-                <q-select outlined v-model="turma" :options="turmas" option-value="id" option-label="nome" label="Turma" @update:model-value=loadHorarios >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey">
-                        No results
-                      </q-item-section>
-                    </q-item>
-                  </template>
+              <q-select outlined v-model="unidade" :options="unidades" option-value="id" option-label="nome" label="Unidade" @update:model-value=loadCursos 
+              transition-show="jump-up"
+              transition-hide="jump-up"
+              >
+                <template v-slot:no-option>
+                  <q-item>
+                    <q-item-section class="text-grey">
+                      No results
+                    </q-item-section>
+                  </q-item>
+                </template>
               </q-select>
 
-                <br>
+              <br>
 
-                <q-chip icon="event" v-if="horarios.length">Horário</q-chip>
+              <q-select outlined v-model="curso" :options="cursos" option-value="id" option-label="nome" label="Curso" @update:model-value=loadTurmas 
+              transition-show="jump-up"
+              transition-hide="jump-up"
+              >
+                <template v-slot:no-option>
+                  <q-item>
+                    <q-item-section class="text-grey">
+                      No results
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+          
+              <q-select outlined v-model="turma" :options="turmas" option-value="id" option-label="nome" label="Turma" @update:model-value=loadHorarios >
+                <template v-slot:no-option>
+                  <q-item>
+                    <q-item-section class="text-grey">
+                      No results
+                    </q-item-section>
+                  </q-item>
+                </template>
+            </q-select>
 
-                <div v-for="(horario, index) in horarios">
+              <br>
 
-                    <br>
+              <q-chip icon="event" v-if="horarios.length">Horário</q-chip>
 
-                    <q-card bordered>
-                
-                        <q-card-section>
-                        <q-item>
-                            <q-item-section avatar>
-                              <q-avatar>
-                                  <img :src="horario.professorInfo.photo">
-                              </q-avatar>
-                            </q-item-section>
-                    
-                            <q-item-section>
-                              <q-item-label>{{horario.Disciplina}}</q-item-label>
-                              <q-item-label caption><a target="_blank" :href="horario.professorInfo.lattes">{{horario.Professor}}</a></q-item-label>
-                            </q-item-section>
-                        </q-item>
+              <div v-for="(horario, index) in horarios">
 
-                        </q-card-section>
+                  <br>
+
+                  <q-card bordered>
+              
+                      <q-card-section>
+                      <q-item>
+                          <q-item-section avatar>
+                            <q-avatar>
+                                <img :src="horario.professorInfo.photo">
+                            </q-avatar>
+                          </q-item-section>
+                  
+                          <q-item-section>
+                            <q-item-label>{{horario.Disciplina}}</q-item-label>
+                            <q-item-label caption><a target="_blank" :href="horario.professorInfo.lattes">{{horario.Professor}}</a></q-item-label>
+                          </q-item-section>
+                      </q-item>
+
+                      </q-card-section>
 
 
-                        <q-card-section class="q-pt-xs">
-                            <div class="text-overline">{{ diaDaSemana(horario.DiaSemana) }}</div>
-                            <div class="text-caption text-grey">
-                            Hoarário:
-                            {{horario.horarios}}
-                            <br>
-                            Sala: 
-                            <span v-if="horario.salaInfo.id">{{horario.salaInfo.nome}} - {{horario.salaInfo.tipo}} - {{horario.salaInfo.localizacao}} - {{horario.salaInfo.descricao}}</span>
-                            <spa v-else>Atribuição pendente</spa>
-                            </div>
-                        </q-card-section>
+                      <q-card-section class="q-pt-xs">
+                          <div class="text-overline">{{ diaDaSemana(horario.DiaSemana) }}</div>
+                          <div class="text-caption text-grey">
+                          Hoarário:
+                          {{horario.horarios}}
+                          <br>
+                          Sala: 
+                          <span v-if="horario.salaInfo.id">{{horario.salaInfo.nome}} - {{horario.salaInfo.tipo}} - {{horario.salaInfo.localizacao}} - {{horario.salaInfo.descricao}}</span>
+                          <spa v-else>Atribuição pendente</spa>
+                          </div>
+                      </q-card-section>
 
-                    </q-card>
+                  </q-card>
 
-                </div>
-            
-            </q-page>
-          </q-page-container>
+              </div>
+          
+          </q-page>
+        </q-page-container>
+
+          
         </q-layout>
+        
 
-        </q-responsive>
 
 </div>
 
