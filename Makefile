@@ -4,7 +4,9 @@ install-dep:
 	npm install -g http-server --no-package-lock
 
 run:
-	http-server .
+	rm -f senac-cade-minha-sala
+	ln -s . senac-cade-minha-sala
+	http-server . -g -i -o senac-cade-minha-sala
 
 db:
 	rm *.db

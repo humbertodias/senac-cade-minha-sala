@@ -14,8 +14,6 @@ URL_CACHE = [
 
 self.addEventListener('install', (event) => {
   console.log("sw.js installed");
-
-
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
@@ -26,7 +24,6 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-
   event.waitUntil(
     caches.keys()
       .then((cache) => {

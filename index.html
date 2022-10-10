@@ -19,10 +19,9 @@
                 SENAC
               </q-toolbar-title>
     
-              <q-btn color="primary" @click="alert = true" icon="info" >
-                <q-tooltip>About</q-tooltip>
+              <q-btn color="primary" icon="code" round href="https://github.com/humbertodias/senac-cade-minha-sala" target="_blank">
               </q-btn>
-            </q-toolbar>
+          </q-toolbar>
 
           </q-header>
       
@@ -116,30 +115,6 @@
 
         </q-layout>
         
-
-        <q-dialog v-model="alert">
-          <q-card>
-            <q-card-section>
-              <div class="text-h6">About</div>
-            </q-card-section>
-    
-            <q-card-section class="q-pt-none">
-
-              <ul>
-                <li><a target="_blank" href="https://www.sp.senac.br/unidades">Senac Unidades</a></li>
-                <li><a target="_blank" href="https://github.com/humbertodias/senac-cade-minha-sala">https://github.com/humbertodias/senac-cade-minha-sala</a></li>
-              </ul>
-
-              
-
-            </q-card-section>
-    
-            <q-card-actions align="right">
-              <q-btn flat label="OK" color="primary" v-close-popup />
-            </q-card-actions>
-          </q-card>
-        </q-dialog>
-
 </div>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -193,7 +168,6 @@
                 });
         },
         loadUnidades(){
-            
             this.cursos = [];
             this.curso = undefined;
 
