@@ -14,3 +14,4 @@ https://humbertodias.github.io/senac-cade-minha-sala/
 * [quasar](https://quasar.dev/vue-components) visual components
 * [quasar-udm](https://quasar.dev/start/umd) unified module definition
 * [sqlite-utils](https://sqlite-utils.datasette.io/en/stable/cli.html) for parsing json into sqlite
+* [material icons](https://fonts.google.com/icons?selected=Material+Icons)
